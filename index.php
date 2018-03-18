@@ -1,5 +1,4 @@
 <?php
-	//require('conexion.php');
 	
 	include 'Archivos_class.php';
 	$archivo = new Archivos();

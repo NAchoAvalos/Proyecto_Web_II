@@ -23,29 +23,62 @@ if (file_exists($nombre_fichero) ) {
 	
 
 }
-public function URLS_img($data){
+public function informacion_img($data){
  //var_dump('entramos');
-	//if(isset($_POST['sign_up'])){ 
-		$handle = fopen("media/".$_SESSION['username']."/urls_img.txt", "a");
-		$numbytes = fwrite($handle, str_pad($_POST['nombre'].'&'.$_POST['autor'].'&'.$_POST['fecha'].'&'.$_POST['size'].'&'.$_POST['descripcion'].'&'.$_POST['clasificacion'].'&'.$data, 200)); fclose($handle);
-		@header("location:checklogin.php");
+	//if(isset($_POST['submit'])){ 
+	$ruta = "media/".$_SESSION['usuario']."/informacion_img.txt";
+	$posicion = filesize($ruta);
+		$handle = fopen("media/".$_SESSION['usuario']."/informacion_img.txt", "a");
+		//$posicion = ftell($handle);
+		$numbytes = fwrite($handle, $_POST['nombre'].'&'.$_POST['autor'].'&'.$_POST['fecha'].'&'.$_POST['size'].'&'.$_POST['descripcion'].'&'.$_POST['clasificacion'].'&'.$data.'|'); fclose($handle);
+
+		$nombres = fopen("media/".$_SESSION['usuario']."/indice_img.txt", "a");
+		//$posicion = ftell($handle);
+		$numbytes = fwrite($nombres, $_POST['nombre'].'&'.$posicion."\r\n"); 
+		fclose($nombres);
+		//@header("location:checklogin.php");
 		//}
 
 	
-	//$_SERVER['REQUEST_METHOD'] = null;
+	$_SERVER['REQUEST_METHOD'] = null;
+
+	}
+
+	public function carga_nombres(){
+	$fp = fopen("media/".$_SESSION['usuario']."/indice_img.txt", 'r');
+	while ($linea = fgets($fp)) {
+		$datos_extraidos = explode("&", $linea);
+
+    	echo '<tr>
+		<td>
+		<p><a href="ventana.php" target="_blank" onClick="window.open(this.href, this.target); return false;">'."\t".$datos_extraidos[0]."\t".'</a></p>
+		<input type="hidden" name="id" id="id" value= '.$datos_extraidos[1].' /> 
+		</td>
+
+		<td>
+		<a href="" download="imagen.jpg">
+											<img src="images/descargar.png" height="25" width="100" ></a>
+		</td>
+		<td>
+		<a href="" download="imagen.jpg">
+											<img src="images/share.png" height="25" width="100" ></a>
+		</td>
+		</tr>';
+}
 
 	}
 
 
 	public function carga_img(){
 
-	$fp = fopen("media/".$_SESSION['username']."/urls_img.txt", 'r');
+	$fp = fopen("media/".$_SESSION['usuario']."/indice_img.txt", 'r');
 	$cont =0;
 	while(!feof($fp)){
-		fseek($fp, $cont*200);
+
+		/*fseek($fp, $cont*200);
 		$datos = fread($fp, 200);
 		$datos = trim($datos);
-		$datos_extraidos = explode("&", $datos);
+		$datos_extraidos = explode("&", $datos);*/
 
 		if(!empty($datos_extraidos) && substr($datos_extraidos[6], -4)==='.jpg'){
 

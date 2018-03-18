@@ -15,7 +15,6 @@ ob_start();
        <?php
       include 'Archivos_class.php';
       $archivo = new Archivos();
-      //var_dump($_SERVER['REQUEST_METHOD'] );
       if($_SERVER['REQUEST_METHOD'] == "POST"){
 
         if($archivo->registro(array('full_name' =>$_POST['full_name'],

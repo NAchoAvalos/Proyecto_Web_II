@@ -1,0 +1,53 @@
+input{
+	border-radius: 10px;
+	border: 1px solid black;
+	margin: 8px 8px 8px 8px;
+	height: 25px;
+}
+
+body{
+	width: 55%;
+	height: 50%;
+	 text-align: right; 
+	 font-family: Verdana;
+	 font-size: 16px;
+	 margin: 100px 400px 100px 400px; 
+}
+
+.table1{
+	border: 1px solid black;
+	border-radius: 10px;
+	float: left;
+	margin: 10px 10px 10px 10px;
+	padding: 10px 10px 10px 10px;
+}
+
+.table2{
+	
+	
+	float: left;
+	margin: 10px 10px 10px 10px;
+	padding: 10px 10px 10px 10px;
+}
+
+
+.table2 td{
+width: 100px;
+text-align: center;
+}
+
+label{
+	text-align: left;
+}
+
+.overflowTest {
+    
+    color: white;
+    padding: 15px;
+    width: 550px;
+    height: 350px;
+    overflow: scroll;
+    border: 1px solid #ccc;
+    margin: 10px 10px 10px 10px;
+	padding: 10px 10px 10px 10px;
+}
