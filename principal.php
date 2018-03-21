@@ -112,8 +112,10 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
  </li>
  <li><a href="#">Ayuda</a></li>
  <li><a href="logout.php">Cerrar Sesion</a>
+
 </ul>
 	    	</nav>
+				<div class="Bienvenido"><b> Bienvenido: <?php echo $_SESSION['usuario']; ?> </b></div>
 	        <form action="#" method="post" enctype="multipart/form-data">
 	        	<table class="table1">
 	        	<tr>

@@ -37,11 +37,8 @@
 			<br />
 			<div><input name="login" class="boton" type="submit" value="login">
 			<button class="boton"> <a href="registro.php">Sign Up</a> </button></div>
-
 		</form>
-
 		<br />
-
 		<div style = "font-size:16px; color:#cc0000;"><?php echo isset($error) ? utf8_decode($error) : '' ; ?></div>
 	</body>
 </html>

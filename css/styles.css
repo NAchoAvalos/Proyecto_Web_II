@@ -386,10 +386,15 @@ table.blueTable tfoot .links a{
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
-a{
+.boton a{
 	text-decoration: none;
 	color: white;
 }
 button{
 	margin-top: auto;
+}
+
+.Bienvenido{
+	text-align: center;
+	margin-right: 150px;
 }
