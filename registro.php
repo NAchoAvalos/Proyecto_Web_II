@@ -9,9 +9,9 @@ ob_start();
         <!--<link rel="stylesheet" href="styles/style.css">-->
         <link href="css/styles.css" rel="stylesheet" media="screen">
   </head>
- 
+
   <body>
-    
+
     <header>
        <?php
       include 'Archivos_class.php';
@@ -28,7 +28,7 @@ ob_start();
       }
       ?>
       </header>
-    
+
     <main>
       <table>
         <form action="#" name="register_form" method="POST">
@@ -70,12 +70,12 @@ ob_start();
             <input type="submit" class="boton" value="Sign Up" name="sign_up"  >
           </td>
           <td>
-            <input type="submit" class="boton" value="Sign In" name="sign_in">
+            <button class="boton"> <a href="index.php">Sign in</a> </button>
           </td>
         </tr>
         </form>
       </table>
-     
+
     </main>
 
     <footer>
