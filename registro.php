@@ -7,6 +7,7 @@ ob_start();
     <meta charset="utf-8">
     <title>Sign Up</title>
         <!--<link rel="stylesheet" href="styles/style.css">-->
+        <link href="css/styles.css" rel="stylesheet" media="screen">
   </head>
  
   <body>
@@ -37,39 +38,39 @@ ob_start();
         <tr>
           <td>
             <label>Full Name</label><br>
-            <input type="text" name="full_name" required>
+            <input type="text" class="campos" name="full_name" placeholder="Nombre" required>
           </td>
         </tr>
         <tr>
           <td>
             <label>Email</label><br>
-            <input type="text" name="email"required>
+            <input type="text" class="campos" name="email" placeholder="email"required>
           </td>
         </tr>
         <tr>
           <td>
             <label>Username</label><br>
-            <input type="text" name="username" required>
+            <input type="text" class="campos" name="username" placeholder="Username" required>
           </td>
         </tr>
         <tr>
           <td>
             <label>Pasword</label><br>
-            <input type="password" name="password" required>
+            <input type="password" class="campos" name="password" placeholder="Pasword" required>
           </td>
         </tr>
         <tr>
           <td>
             <label>Confirm Password</label><br>
-            <input type="password" name="re-password" required>
+            <input type="password" class="campos" name="re-password" placeholder="Password" required>
           </td>
         </tr>
         <tr>
           <td>
-            <input type="submit" value="Sign Up" name="sign_up"  >
+            <input type="submit" class="boton" value="Sign Up" name="sign_up"  >
           </td>
           <td>
-            <input type="submit" value="Sign In" name="sign_in">
+            <input type="submit" class="boton" value="Sign In" name="sign_in">
           </td>
         </tr>
         </form>

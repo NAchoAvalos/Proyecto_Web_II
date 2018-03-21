@@ -26,15 +26,16 @@
 <html>
 	<head>
 		<title>Login</title>
+		<link href="css/styles.css" rel="stylesheet" media="screen">
 	</head>
 	
 	<body>
 		<form action="#" method="POST" > 
-			<div><label>Usuario:</label><input id="usuario" name="usuario" type="text" required></div>
+			<div><label>Usuario:</label><input id="usuario" class="campos" name="usuario" type="text" placeholder="Usuario" required></div>
 			<br />
-			<div><label>Password:</label><input id="password" name="password" type="password" required></div>
+			<div><label>Password:</label><input id="password" class="campos" name="password" type="password" placeholder="Password" required></div>
 			<br />
-			<div><input name="login" type="submit" value="login"></div> 
+			<div><input name="login" class="boton" type="submit" value="login"></div> 
 		</form> 
 		
 		<br />

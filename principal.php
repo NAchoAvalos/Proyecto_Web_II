@@ -56,8 +56,12 @@
 	exit;
 	}
 
+
+
 	 include 'Archivos_class.php';
       $archivo = new Archivos();
+      
+
      
 	if($_SERVER['REQUEST_METHOD'] == 'POST'){
 if ($_FILES['archivo']["error"] > 0)
@@ -80,6 +84,17 @@ if ($_FILES['archivo']["error"] > 0)
 }
 //$_SERVER['REQUEST_METHOD'] = null;
 }
+$datos =null;
+if($_SERVER['REQUEST_METHOD'] == 'GET'){
+	if (isset($_GET['id_principal']) && isset($_GET['id_fin_principal']) ) {
+		# code...
+		$datos = $archivo->extraer_datos_completos($_GET['id_principal'],$_GET['id_fin_principal']);
+	}
+
+
+}
+
+
 
 	?>
 
@@ -89,6 +104,30 @@ if ($_FILES['archivo']["error"] > 0)
 	    	<link href="css/styles.css" rel="stylesheet" media="screen">
 	    </head>
 	    <body>
+	    	<nav>
+	    		<ul id="menu-bar">
+ <li class="active"><a href="#">Principal</a></li>
+ <li><a href="#">Compartidos</a>
+  <ul>
+   <li><a href="#">Products Sub Menu 1</a></li>
+   <li><a href="#">Products Sub Menu 2</a></li>
+   <li><a href="#">Products Sub Menu 3</a></li>
+   <li><a href="#">Products Sub Menu 4</a></li>
+  </ul>
+ </li>
+ 
+ </li>
+ <li><a href="#">About</a></li>
+ <li><a href="#">Ayuda</a></li>
+ <li><a href="#">Configuraciones</a>
+  <ul>
+   <li><a href="#">Services Sub Menu 1</a></li>
+   <li><a href="#">Services Sub Menu 2</a></li>
+   <li><a href="#">Services Sub Menu 3</a></li>
+   <li><a href="#">Services Sub Menu 4</a></li>
+  </ul>
+</ul>
+	    	</nav>
 	    	<a href=panel-control.php>Panel de Control</a>
 	        <form action="#" method="post" enctype="multipart/form-data">
 	        	<table class="table1">
@@ -97,7 +136,7 @@ if ($_FILES['archivo']["error"] > 0)
 	        	<label>Nombre archivo</label>
 	        	</td>
 	        	<td>
-	        	<input type="text" name="nombre" required>
+	        	<input type="text" class="campos" name="nombre" placeholder="Nombre" value="<?php echo $datos[0]?>" required>
 	        	</td>
 	        	</tr>
 	        	<tr>
@@ -105,7 +144,7 @@ if ($_FILES['archivo']["error"] > 0)
 	        	<label>Autor</label>
 	        	</td>
 	        	<td>
-	        	<input type="text" name="autor" required>
+	        	<input type="text" class="campos" name="autor" placeholder="Autor" value="<?php echo $datos[1]?>" required>
 	        	</td>
 	        	</tr>
 	        	<tr>
@@ -113,7 +152,7 @@ if ($_FILES['archivo']["error"] > 0)
 	        	<label>Fecha</label>
 	        	</td>
 	        	<td>
-	        	<input type="text" name="fecha" required>
+	        	<input type="text" class="campos" name="fecha" placeholder="Fecha" value="<?php echo $datos[2]?>" required>
 	        	</td>
 	        	</tr>
 	        	<tr>
@@ -121,7 +160,7 @@ if ($_FILES['archivo']["error"] > 0)
 	        	<label>Size</label>
 	        	</td>
 	        	<td>
-	        	<input type="text" name="size" required>
+	        	<input type="text" class="campos" name="size" placeholder="Size" value="<?php echo $datos[3]?>" required>
 	        	</td>
 	        	</tr>
 	        	<tr>
@@ -129,7 +168,7 @@ if ($_FILES['archivo']["error"] > 0)
 	        	<label>Descripcion</label>
 	        	</td>
 	        	<td>
-	        	<input type="text" name="descripcion" required>
+	        	<input type="text" class="campos" name="descripcion" placeholder="Descripcion" value="<?php echo $datos[4]?>" required>
 	        	</td>
 	        	</tr>
 	        	<tr>
@@ -137,13 +176,27 @@ if ($_FILES['archivo']["error"] > 0)
 	        	<label>Clasificacion</label>
 	        	</td>
 	        	<td>
-	        	<input type="text" name="clasificacion" required>
+	        	<input type="text" class="campos" name="clasificacion" placeholder="Clasificacion"  value="<?php echo $datos[5]?>"required>
 	        	</td>
 	        	</tr>
 	        	<tr>
 	        	<td colspan="2">
-	            <input type="file"  name="archivo" id="archivo"></input>
-	            <input type="submit" class = "submit" value="Subir archivo"></input>
+	        		<?php 
+	        			if($_SERVER['REQUEST_METHOD'] == 'GET' &&$datos != null){
+
+	        				echo '<input type="submit" class = "boton" name="actualizar" id="actualizar"  value="Actualizar"></input>
+	           				 <input type="submit" class = "boton" name="ver" id="ver" value="Ver Imagen"></input>
+	           				 <input type="submit" class = "boton" name="borrar" id="borrar" value="Borrar"></input>';
+	        			}
+	        			else{
+	        				echo '<input type="file" class="campos"  name="archivo" id="archivo"></input>
+	           				 <input type="submit" class = "boton" value="Subir archivo"></input>';
+	        			}
+
+	        		?>
+	        			
+
+	            
 	            </td>
 	            </tr>
 	            
@@ -151,12 +204,40 @@ if ($_FILES['archivo']["error"] > 0)
 	        </form>
 
   <div id="mensajes" class="overflowTest"> 
-  	<table class="table2">
+  	<table class="blueTable">
+  		<thead>
+<tr>
+<th>Nombre</th>
+<th>Descargar</th>
+<th>Compartir</th>
+
+</tr>
+</thead>
   	  	<?php $archivo->carga_nombres(); 
   	//$archivo->validacion_usuario();
   	?>
   	</table>
 
 </div>
+
+      <?php 
+if($_SERVER['REQUEST_METHOD'] == 'GET'){
+	if (isset($_GET['id']) && isset($_GET['id_fin']) ) {
+		# code...
+
+echo '<div class="modal-wrapper" id="popup">
+   <div class="popup-contenedor">
+      <h2>Titulo de la Modal</h2>';
+		$archivo->listado_usuarios($_GET['id'],$_GET['id_fin']);
+		echo '<a class="popup-cerrar" href="principal.php">X</a>
+   </div>
+</div>';
+	}
+
+
+}
+
+?>
+
 	    </body>
 	</html>
