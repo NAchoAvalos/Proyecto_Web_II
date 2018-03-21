@@ -18,7 +18,7 @@
         {
             echo "Ha habido un problema al crear el archivo informacion";
         }
- 
+
         fclose($fpa);
     }
 }
@@ -35,7 +35,7 @@
         {
             echo "Ha habido un problema al crear el Archivos indice";
         }
- 
+
         fclose($fpa);
     }
 }
@@ -60,9 +60,9 @@
 
 	 include 'Archivos_class.php';
       $archivo = new Archivos();
-      
 
-     
+
+
 	if($_SERVER['REQUEST_METHOD'] == 'POST'){
 if ($_FILES['archivo']["error"] > 0)
 	  {
@@ -74,7 +74,7 @@ if ($_FILES['archivo']["error"] > 0)
 	  echo "Tipo: " . $_FILES['archivo']['type'] . "<br>";
 	  echo "Tamaño: " . ($_FILES["archivo"]["size"] / 1024) . " kB<br>";
 	  echo "Carpeta temporal: " . $_FILES['archivo']['tmp_name'];*/
-	 
+
 	  /*ahora co la funcion move_uploaded_file lo guardaremos en el destino que queramos*/
 	move_uploaded_file($_FILES['archivo']['tmp_name'],
 	"media/" . $_SESSION['usuario'].'/'. $_FILES['archivo']['name']);
@@ -90,14 +90,8 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
 		# code...
 		$datos = $archivo->extraer_datos_completos($_GET['id_principal'],$_GET['id_fin_principal']);
 	}
-
-
 }
-
-
-
 	?>
-
 	 <!DOCTYPE html>
 	<html>
 	    <head>
@@ -106,7 +100,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
 	    <body>
 	    	<nav>
 	    		<ul id="menu-bar">
- <li class="active"><a href="#">Principal</a></li>
+ <li class="active"><a href="principal.php">Principal</a></li>
  <li><a href="#">Compartidos</a>
   <ul>
    <li><a href="#">Products Sub Menu 1</a></li>
@@ -115,20 +109,11 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
    <li><a href="#">Products Sub Menu 4</a></li>
   </ul>
  </li>
- 
  </li>
- <li><a href="#">About</a></li>
  <li><a href="#">Ayuda</a></li>
- <li><a href="#">Configuraciones</a>
-  <ul>
-   <li><a href="#">Services Sub Menu 1</a></li>
-   <li><a href="#">Services Sub Menu 2</a></li>
-   <li><a href="#">Services Sub Menu 3</a></li>
-   <li><a href="#">Services Sub Menu 4</a></li>
-  </ul>
+ <li><a href="logout.php">Cerrar Sesion</a>
 </ul>
 	    	</nav>
-	    	<a href=panel-control.php>Panel de Control</a>
 	        <form action="#" method="post" enctype="multipart/form-data">
 	        	<table class="table1">
 	        	<tr>
@@ -181,7 +166,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
 	        	</tr>
 	        	<tr>
 	        	<td colspan="2">
-	        		<?php 
+	        		<?php
 	        			if($_SERVER['REQUEST_METHOD'] == 'GET' &&$datos != null){
 
 	        				echo '<input type="submit" class = "boton" name="actualizar" id="actualizar"  value="Actualizar"></input>
@@ -192,18 +177,14 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
 	        				echo '<input type="file" class="campos"  name="archivo" id="archivo"></input>
 	           				 <input type="submit" class = "boton" value="Subir archivo"></input>';
 	        			}
-
 	        		?>
-	        			
-
-	            
 	            </td>
 	            </tr>
-	            
+
 	            </table>
 	        </form>
 
-  <div id="mensajes" class="overflowTest"> 
+  <div id="mensajes" class="overflowTest">
   	<table class="blueTable">
   		<thead>
 <tr>
@@ -213,14 +194,14 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
 
 </tr>
 </thead>
-  	  	<?php $archivo->carga_nombres(); 
+  	  	<?php $archivo->carga_nombres();
   	//$archivo->validacion_usuario();
   	?>
   	</table>
 
 </div>
 
-      <?php 
+      <?php
 if($_SERVER['REQUEST_METHOD'] == 'GET'){
 	if (isset($_GET['id']) && isset($_GET['id_fin']) ) {
 		# code...
