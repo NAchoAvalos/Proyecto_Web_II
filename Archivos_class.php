@@ -30,8 +30,9 @@ public function informacion_img($data){
 	$posicion = filesize($ruta);
 		$handle = fopen("media/".$_SESSION['usuario']."/informacion_img.txt", "a");
 		//$posicion = ftell($handle);
-		$numbytes = fwrite($handle, $_POST['nombre'].'&'.$_POST['autor'].'&'.$_POST['fecha'].'&'.$_POST['size'].'&'.$_POST['descripcion'].'&'.$_POST['clasificacion'].'&'.$data); 
-		$posicion_final = ftell($handle);
+		$datos = $_POST['nombre'].'&'.$_POST['autor'].'&'.$_POST['fecha'].'&'.$_POST['size'].'&'.$_POST['descripcion'].'&'.$_POST['clasificacion'].'&'.$data;
+		$numbytes = fwrite($handle,$datos ); 
+		$posicion_final = $posicion + strlen($datos);
 
 		fclose($handle);
 				$nombres = fopen("media/".$_SESSION['usuario']."/indice_img.txt", "a");
@@ -45,6 +46,88 @@ public function informacion_img($data){
 	$_SERVER['REQUEST_METHOD'] = null;
 
 	}
+
+	public function actualizacion_img($id1,$id2,$cont,$name){
+ //var_dump('entramos');
+	//if(isset($_POST['submit'])){ 
+
+//var_dump('contador->'.$cont);
+
+
+		$inicio = $_POST['id1_actualizar'];
+		$fin = $_POST['id2_actualizar'];
+		$total = intval($fin) - intval($inicio);
+		$url =$this ->extraer_datos($inicio,$fin);
+		$nuevos_datos = $_POST['nombre'].'&'.$_POST['autor'].'&'.$_POST['fecha'].'&'.$_POST['size'].'&'.$_POST['descripcion'].'&'.$_POST['clasificacion'].'&'.$url;
+
+
+	$ruta = "media/".$_SESSION['usuario']."/informacion_img.txt";
+	
+
+		if (strlen($nuevos_datos) > $total) {
+			# code...
+			var_dump('iff');
+			$posicion = filesize($ruta);
+		$handle = fopen("media/".$_SESSION['usuario']."/informacion_img.txt", "r+");
+		fseek($handle, $inicio);
+		//var_dump(ftell($handle));
+		$space ='x';
+		fwrite($handle, str_pad('', $total)); 
+		fseek($handle, $posicion);
+		//var_dump(ftell($handle));
+			$inicio = ftell($handle);
+			$fin = $inicio + strlen($nuevos_datos);
+
+
+		}
+		else{var_dump('else');
+			//$posicion = filesize($ruta);
+		$handle = fopen("media/".$_SESSION['usuario']."/informacion_img.txt", "r+");
+			fseek($handle, $inicio);
+			$fin = $inicio + strlen($nuevos_datos);
+		}
+		//var_dump($inicio);
+		//var_dump($fin);
+
+
+		//$posicion = ftell($handle);
+		$numbytes = fwrite($handle, $nuevos_datos ); 
+		$posicion_final = ftell($handle);
+
+		fclose($handle);
+
+		$this->actualiza_linea($cont,$name.'&'.$inicio.'&'.$fin."\r\n");
+
+				//$nombres = fopen("media/".$_SESSION['usuario']."/indice_img.txt", "a");
+		//$posicion = ftell($handle);
+		//$numbytes = fwrite($nombres, $_POST['nombre'].'&'.$posicion.'&'.$posicion_final."\r\n"); 
+		//fclose($nombres);
+		//@header("location:checklogin.php");
+		//}
+
+	
+	$_SERVER['REQUEST_METHOD'] = null;
+
+	}
+
+
+public function actualiza_linea($cont, $datos){
+
+		$numeroLinea                = $cont;
+$numeroLineaReal            = $numeroLinea-1;
+$lineas                     = file("media/".$_SESSION['usuario']."/indice_img.txt");
+//var_dump($lineas);
+$lineas[$numeroLineaReal]   = $datos;
+ 
+$fp = fopen("media/".$_SESSION['usuario']."/indice_img.txt", "w");
+for($contador=0; $contador<=$numeroLinea; $contador++)
+{
+	//if($contador == $cont)
+  fwrite($fp, $lineas[$contador]);
+}
+ 
+fclose($fp);
+}
 
 
 	public function compartir_img($data, $users){
@@ -75,13 +158,15 @@ public function informacion_img($data){
 
 	public function carga_nombres(){
 	$fp = fopen("media/".$_SESSION['usuario']."/indice_img.txt", 'r');
+	static $cont =1;
 	while ($linea = fgets($fp)) {
 		$datos_extraidos = explode("&", $linea);
 
     	echo '<tr>
 		<td>
-		<a href="principal.php?id_principal='.$datos_extraidos[1].'&id_fin_principal='.$datos_extraidos[2].'" >'.$datos_extraidos[0].'</a>
+		<a href="principal.php?id_principal='.$datos_extraidos[1].'&id_fin_principal='.$datos_extraidos[2].'&cont='.$cont.'" >'.$datos_extraidos[0].'</a>
 											<input type="hidden" name="id" id="id" value= '.$datos_extraidos[1].' /> 
+
 		</td>
 
 		<td class="'.$datos_extraidos[1].'">
@@ -95,7 +180,7 @@ public function informacion_img($data){
 											<img src="images/share.png" height="30" width="120" ></a>
 		</td>
 		</tr>';
-}
+$cont++;}
 
 	}
 
@@ -114,6 +199,7 @@ public function informacion_img($data){
 		$datos = fread($fp, $id_final);
 		//$datos = trim($datos);
 		$datos_extraidos = explode("&", $datos);
+		var_dump($datos_extraidos);
 		return $datos_extraidos;
 	}
 
@@ -176,7 +262,7 @@ if (file_exists($nombre_fichero) ) {
 		$datos = fread($fp, 100);
 		$datos = trim($datos);
 		$datos_extraidos = explode("/", $datos);
-		if (isset($datos_extraidos[2])) {
+		if (isset($datos_extraidos[2]) && $datos_extraidos[2] !== $_SESSION['usuario'] ) {
 			array_push ($usuarios , $datos_extraidos[2]);
 		}
 		
@@ -201,7 +287,7 @@ $cont = 1;
  		echo '<input type="hidden" name="id1" id="id1" value= '.$val1.' /> ';
  		echo '<input type="hidden" name="id2" id="id2" value= '.$val2.' /> ';
  		echo '</div>';
-	echo '<button type="submit">Enviar</button></form>';
+	echo '<button type="submit" class="boton">Compartir</button></form>';
 
 
 
@@ -223,7 +309,7 @@ $cont = 1;
 		//var_dump($datos_extraidos);
 		if(!empty($datos)){
 		if($datos_extraidos[2] === $usuario && $datos_extraidos[3] === $password ){
-			var_dump("verdad");
+			//var_dump("verdad");
 			return true;
 		}}
 		//$datos = str_replace("/", " ", $datos);

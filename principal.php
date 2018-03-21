@@ -16,7 +16,7 @@
         }
         else
         {
-            echo "Ha habido un problema al crear el archivo informacion";
+            //echo "Ha habido un problema al crear el archivo informacion";
         }
  
         fclose($fpa);
@@ -33,7 +33,7 @@
         }
         else
         {
-            echo "Ha habido un problema al crear el Archivos indice";
+           // echo "Ha habido un problema al crear el Archivos indice";
         }
  
         fclose($fpa);
@@ -62,8 +62,15 @@
       $archivo = new Archivos();
       
 
-     
 	if($_SERVER['REQUEST_METHOD'] == 'POST'){
+if(isset($_POST['actualizar'])){
+
+#actualizamos
+	$archivo -> actualizacion_img($_POST['id1_actualizar'],$_POST['id2_actualizar'],$_POST['cont'],$_POST['nombre']);
+
+}
+else{
+
 if ($_FILES['archivo']["error"] > 0)
 	  {
 	  echo "Error: " . $_FILES['archivo']['error'] . " No es un archivo valido<br>";
@@ -84,6 +91,7 @@ if ($_FILES['archivo']["error"] > 0)
 }
 //$_SERVER['REQUEST_METHOD'] = null;
 }
+}//cierre request
 $datos =null;
 if($_SERVER['REQUEST_METHOD'] == 'GET'){
 	if (isset($_GET['id_principal']) && isset($_GET['id_fin_principal']) ) {
@@ -106,7 +114,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
 	    <body>
 	    	<nav>
 	    		<ul id="menu-bar">
- <li class="active"><a href="#">Principal</a></li>
+ <li class="active"><a href="principal.php">Principal</a></li>
  <li><a href="#">Compartidos</a>
   <ul>
    <li><a href="#">Products Sub Menu 1</a></li>
@@ -186,7 +194,12 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
 
 	        				echo '<input type="submit" class = "boton" name="actualizar" id="actualizar"  value="Actualizar"></input>
 	           				 <input type="submit" class = "boton" name="ver" id="ver" value="Ver Imagen"></input>
-	           				 <input type="submit" class = "boton" name="borrar" id="borrar" value="Borrar"></input>';
+	           				 <input type="submit" class = "boton" name="borrar" id="borrar" value="Borrar"></input>
+
+					 		<input type="hidden" name="id1_actualizar" id="id1_actualizar" value= '.$_GET['id_principal'].' /> 
+					 		<input type="hidden" name="id2_actualizar" id="id2_actualizar" value= '.$_GET['id_fin_principal'].' /> 
+					 		<input type="hidden" name="cont" id="cont" value= '.$_GET['cont'].' /> 
+						           				 ';
 	        			}
 	        			else{
 	        				echo '<input type="file" class="campos"  name="archivo" id="archivo"></input>
@@ -227,7 +240,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
 
 echo '<div class="modal-wrapper" id="popup">
    <div class="popup-contenedor">
-      <h2>Titulo de la Modal</h2>';
+      <h3>Usuarios para compartir</h3>';
 		$archivo->listado_usuarios($_GET['id'],$_GET['id_fin']);
 		echo '<a class="popup-cerrar" href="principal.php">X</a>
    </div>
